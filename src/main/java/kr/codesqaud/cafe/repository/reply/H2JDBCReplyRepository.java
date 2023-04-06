@@ -1,10 +1,11 @@
 package kr.codesqaud.cafe.repository.reply;
 
 import kr.codesqaud.cafe.domain.Reply;
-import kr.codesqaud.cafe.dto.reply.ReplySaveDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -22,10 +23,13 @@ public class H2JDBCReplyRepository implements ReplyRepository {
     }
 
     @Override
-    public void save(ReplySaveDTO reply) {
+    public int save(Reply reply) {
         String sql = "insert into reply (articleId, userId, contents, timestamp, deleted) values (?,?,?,?, ?)";
 
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
         template.update(sql, reply.getArticleId(), reply.getUserId(), reply.getContents(), new Timestamp(System.currentTimeMillis()), false);
+        return keyHolder.getKey().intValue();
     }
 
     @Override
