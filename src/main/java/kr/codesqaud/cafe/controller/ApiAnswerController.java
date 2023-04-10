@@ -2,7 +2,6 @@ package kr.codesqaud.cafe.controller;
 
 import kr.codesqaud.cafe.domain.Reply;
 import kr.codesqaud.cafe.domain.User;
-import kr.codesqaud.cafe.dto.reply.ReplySaveDTO;
 import kr.codesqaud.cafe.repository.reply.ReplyRepository;
 import kr.codesqaud.cafe.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,11 @@ public class ApiAnswerController {
     }
 
     @PostMapping("/qna/show/{articleId}")
-    public ReplySaveDTO createAnswer(@ModelAttribute Reply reply, HttpSession session) {
+    public Reply createAnswer(@ModelAttribute Reply reply, HttpSession session) {
         User loginUser = SessionUtil.getSessionedUser(session);
-        ReplySaveDTO replySaveDTO = new ReplySaveDTO(reply.getArticleId(), loginUser.getUserId(), reply.getContents(), Timestamp.valueOf(LocalDateTime.now()));
+        int primaryKey = replyRepository.save(reply);
 
-        replyRepository.save(replySaveDTO);
+        Reply replySaveDTO = new Reply(primaryKey, reply.getArticleId(), loginUser.getUserId(), reply.getContents(), Timestamp.valueOf(LocalDateTime.now()));
 
         return replySaveDTO;
     }

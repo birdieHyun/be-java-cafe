@@ -96,17 +96,13 @@
                                     </ul>
                                 </div>
                             </article>
-                            <script src="/js/reply.js">
-                            </script>
-                            <form class="submit-write" name="answer" action="" method="post">
-                                <div class="form-group" style="padding:14px;">
-                                <textarea class="form-control" name="contents"
-                                          placeholder="Update your status"></textarea>
-                                </div>
 
-                                <button onclick="addAnswer(event)" class="btn btn-success pull-right">
-                                    답변하기
-                                </button>
+                            <form class="submit-write">
+                                <div class="form-group" style="padding:14px;">
+                                <textarea class="form-control" placeholder="Update your status"
+                                          name="contents"></textarea>
+                                </div>
+                                <button id="btn-save" class="btn btn-success pull-right" type="button">답변하기</button>
                                 <div class="clearfix"/>
                             </form>
                         </div>
@@ -134,10 +130,10 @@
         <div class="article-util">
             <ul class="article-util-list">
                 <li>
-                    <a class="link-modify-article" href="/api/qna/updateAnswer/{3}">수정</a>
+                    <a class="link-modify-article" href="/show/qna/{4}">수정</a>
                 </li>
                 <li>
-                    <form class="delete-answer-form" action="/api/questions/{3}/answers/{4}" method="POST">
+                    <form class="delete-answer-form" action="/show/qna/{4}" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="delete-answer-button">삭제</button>
                     </form>
